@@ -16,6 +16,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.renanborgess.workshopmongo.domain.User;
 import com.renanborgess.workshopmongo.dto.UserDTO;
 import com.renanborgess.workshopmongo.services.UserService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -45,5 +47,15 @@ public class UserResources {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();		
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable String id){
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+	}
+	
+	public String requestMethodName(@RequestParam String param) {
+		return new String();
 	}
 }
