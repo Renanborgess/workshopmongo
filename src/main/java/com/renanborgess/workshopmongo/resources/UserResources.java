@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.renanborgess.workshopmongo.domain.User;
 import com.renanborgess.workshopmongo.dto.UserDTO;
 import com.renanborgess.workshopmongo.services.UserService;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -54,6 +54,14 @@ public class UserResources {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+		public ResponseEntity<Void> update(@RequestBody UserDTO objDTO, @PathVariable String id){
+			User obj = service.fromDTO(objDTO);
+			obj.setId(id);
+			obj = service.update(obj);
+			return ResponseEntity.noContent().build();
+		}
 	
 	public String requestMethodName(@RequestParam String param) {
 		return new String();
